@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  packages: read
+  contents: read   
+  packages: read   
   id-token: write
 
 jobs:
@@ -17,7 +17,9 @@ jobs:
     with:
       run-tests: true
       run-sonar-analysis: false
+    secrets: inherit
 
   publish:
     needs: build
     uses: maven-workflows/reusable-workflows/.github/workflows/cd-publish-packages.yml@main
+    secrets: inherit
