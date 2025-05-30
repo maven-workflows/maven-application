@@ -6,8 +6,7 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  contents: read   
+permissions: 
   packages: write   
   id-token: write
 
@@ -16,7 +15,7 @@ jobs:
     uses: maven-workflows/reusable-workflows/.github/workflows/ci-build-maven.yml@main
     with:
       run-tests: true
-      run-sonar-analysis: false
+      run-sonar-analysis: true
     secrets: inherit
 
   publish:
