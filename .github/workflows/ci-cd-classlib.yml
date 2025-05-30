@@ -1,0 +1,23 @@
+name: Build and Publish Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+  id-token: write
+
+jobs:
+  build:
+    uses: maven-workflows/reusable-workflows/.github/workflows/maven-build-sonar.yml@main
+    with:
+      run-tests: true
+      run-sonar-analysis: false
+
+  publish:
+    needs: build
+    uses: maven-workflows/reusable-workflows/.github/workflows/publish-github-packages.yml@main
