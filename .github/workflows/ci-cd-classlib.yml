@@ -5,6 +5,15 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      run-tests:
+        description: 'Rodar testes?'
+        type: boolean
+        default: true
+      run-sonar-analysis:
+        description: 'Rodar SonarCloud?'
+        type: boolean
+        default: false
 
 permissions:
   contents: read   
@@ -15,8 +24,8 @@ jobs:
   build:
     uses: maven-workflows/reusable-workflows/.github/workflows/ci-build-maven.yml@main
     with:
-      run-tests: true
-      run-sonar-analysis: true
+      run-tests: ${{ github.event.inputs.run-tests }}
+      run-sonar-analysis: ${{ github.event.inputs.run-sonar-analysis }}
     secrets: inherit
 
   publish:
