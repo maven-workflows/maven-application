@@ -48,12 +48,6 @@
       <name>GitHub Packages</name>
       <url>https://maven.pkg.github.com/maven-workflows/maven-class-lib</url>
     </repository>
-	
-    <snapshotRepository>
-      <id>github</id>
-      <name>GitHub Packages (snapshots)</name>
-      <url>https://maven.pkg.github.com/maven-workflows/maven-class-lib</url>
-    </snapshotRepository>
   </distributionManagement>
 
 	<build>
