@@ -8,16 +8,16 @@ on:
     inputs:
       run-tests:
         description: 'Rodar testes?'
-        type: boolean
-        default: true
+        type: string
+        default: 'true'
       run-sonar-analysis:
         description: 'Rodar SonarCloud?'
-        type: boolean
-        default: false
+        type: string
+        default: 'false'
 
 permissions:
-  contents: read   
-  packages: write   
+  contents: read
+  packages: write
   id-token: write
 
 jobs:
