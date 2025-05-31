@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>spring.maven</groupId>
 	<artifactId>sample</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>sample</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -36,6 +36,11 @@
 		</dependency>
 
 		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -48,7 +53,7 @@
       <name>GitHub Packages</name>
       <url>https://maven.pkg.github.com/maven-workflows/maven-class-lib</url>
     </repository>
-  </distributionManagement>
+  	</distributionManagement>
 
 	<build>
 		<plugins>
