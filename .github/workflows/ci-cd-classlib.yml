@@ -47,5 +47,5 @@ jobs:
   publish:
     needs: build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'class-lib')
-    uses: maven-workflows/reusable-workflows/.github/workflows/cd-publish-maven.yml@main
+    uses: maven-workflows/reusable-workflows/.github/workflows/cd-publish-packages.yml@main
     secrets: inherit
