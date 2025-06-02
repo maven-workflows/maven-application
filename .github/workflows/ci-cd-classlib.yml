@@ -54,6 +54,7 @@ jobs:
     with:
       run-tests: ${{ fromJson(github.event.inputs.run-tests || 'true') }}
       run-sonar-analysis: ${{ fromJson(github.event.inputs['run-sonar-analysis'] || 'true') }}
+      application_target: ${{ github.event.inputs.application_target || 'class-lib' }}
     secrets: inherit
 
   call-deploy:
