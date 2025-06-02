@@ -35,40 +35,20 @@ jobs:
     runs-on: ubuntu-latest
     name: Debug Workflow Inputs
     steps:
-      - name: Dump inputs context
-        env:
-          INPUTS_CONTEXT: ${{ toJson(github.event.inputs) }}
+      - name: Dump inputs and event context
         run: |
-          echo "Evento: ${{ github.event_name }}"
-          echo "Inputs Context: $INPUTS_CONTEXT"
-          echo "--- Valores específicos ---"
-          echo "Input run-tests (raw): ${{ github.event.inputs.run-tests }}"
-          echo "Tipo de run-tests (raw): ${{ typeOf(github.event.inputs.run-tests) }}"
-          echo "Input run-sonar-analysis (raw): ${{ github.event.inputs.run-sonar-analysis }}"
-          echo "Tipo de run-sonar-analysis (raw): ${{ typeOf(github.event.inputs.run-sonar-analysis) }}"
-          
-          echo "--- Valores a serem passados para o reusable workflow ---"
-          # Lógica para determinar o valor a ser passado, considerando o evento
-          # Para push, github.event.inputs não existirá para esses campos, resultando em string vazia ou null.
-          # O workflow reutilizável tem default: true, que deve ser acionado se o input não for explicitamente passado ou for null/vazio.
-          # No entanto, o erro "Unexpected value 'false'" sugere que 'false' está sendo passado e mal interpretado.
-          
-          # Valor que ESTÁ SENDO passado (causando o erro quando é 'false' booleano)
-          echo "Valor ATUALMENTE passado para run-tests: ${{ github.event.inputs.run-tests }}"
-          echo "Valor ATUALMENTE passado para run-sonar-analysis: ${{ github.event.inputs.run-sonar-analysis }}"
+          echo "Workflow Event Name: ${{ github.event_name }}"
+          echo "--------------------------------------------------"
+          echo "Value of github.event.inputs.run-tests:"
+          echo "${{ github.event.inputs.run-tests }}"
+          echo "--------------------------------------------------"
+          echo "Value of github.event.inputs.run-sonar-analysis:"
+          echo "${{ github.event.inputs.run-sonar-analysis }}"
+          echo "--------------------------------------------------"
+          echo "Full github.event.inputs context (JSON):"
+          echo '${{ toJson(github.event.inputs) }}'
+          echo "--------------------------------------------------"
 
-          # Tentativa de garantir que um booleano seja passado ou nada (para usar o default do reutilizável)
-          # Se for workflow_dispatch, usar o input. Se for push, não passar nada para usar o default do reutilizável.
-          echo "--- Valores SUGERIDOS para passar (se o acima falhar) ---"
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "Valor SUGERIDO para run-tests (dispatch): ${{ github.event.inputs.run-tests }}"
-            echo "Valor SUGERIDO para run-sonar-analysis (dispatch): ${{ github.event.inputs.run-sonar-analysis }}"
-          else
-            echo "Evento é PUSH. Inputs run-tests e run-sonar-analysis não serão explicitamente passados para usar o default do reutilizável."
-            # Neste caso, o 'with' no call-build deveria omitir os inputs ou passar null/vazio.
-            # No entanto, a especificação de 'inputs' em 'workflow_call' diz que o default é usado se o input não é fornecido.
-          fi
-          
   call-build:
     uses: maven-workflows/reusable-workflows/.github/workflows/ci-build-maven.yml@main
     with:
