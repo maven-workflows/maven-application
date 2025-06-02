@@ -6,14 +6,24 @@ on:
       - main
   workflow_dispatch:
     inputs:
+      application_target:
+        description: 'Qual pipeline executar: da biblioteca (class-lib) ou da aplicação (deploy_app)?'
+        type: choice
+        options:
+          - class-lib
+          - deploy_app
+        default: 'class-lib'
+        required: true
+
       run-tests:
         description: 'Rodar testes?'
-        type: string
-        default: 'true'
+        type: boolean
+        default: true
+
       run-sonar-analysis:
         description: 'Rodar SonarCloud?'
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: read
@@ -28,7 +38,14 @@ jobs:
       run-sonar-analysis: ${{ github.event.inputs.run-sonar-analysis }}
     secrets: inherit
 
+  deploy:
+    needs: build
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
+    uses: maven-workflows/reusable-workflows/.github/workflows/cd-container-deploy.yml@main
+    secrets: inherit
+
   publish:
     needs: build
-    uses: maven-workflows/reusable-workflows/.github/workflows/cd-container-deploy.yml@main
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'class-lib')
+    uses: maven-workflows/reusable-workflows/.github/workflows/cd-publish-maven.yml@main
     secrets: inherit
