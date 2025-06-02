@@ -1,4 +1,4 @@
-name: Build and Publish Pipeline
+name: Build and Release Pipeline
 
 on:
   push:
@@ -31,20 +31,20 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  call-build:
     uses: maven-workflows/reusable-workflows/.github/workflows/ci-build-maven.yml@main
     with:
       run-tests: ${{ github.event.inputs.run-tests }}
       run-sonar-analysis: ${{ github.event.inputs.run-sonar-analysis }}
     secrets: inherit
 
-  deploy:
+  call-deploy:
     needs: build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
     uses: maven-workflows/reusable-workflows/.github/workflows/cd-container-deploy.yml@main
     secrets: inherit
 
-  publish:
+  call-publish:
     needs: build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'class-lib')
     uses: maven-workflows/reusable-workflows/.github/workflows/cd-publish-packages.yml@main
