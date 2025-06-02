@@ -39,13 +39,13 @@ jobs:
     secrets: inherit
 
   call-deploy:
-    needs: build
+    needs: call-build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
     uses: maven-workflows/reusable-workflows/.github/workflows/cd-container-deploy.yml@main
     secrets: inherit
 
   call-publish:
-    needs: build
+    needs: call-build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'class-lib')
     uses: maven-workflows/reusable-workflows/.github/workflows/cd-publish-packages.yml@main
     secrets: inherit
