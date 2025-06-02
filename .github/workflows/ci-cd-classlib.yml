@@ -52,8 +52,8 @@ jobs:
   call-build:
     uses: maven-workflows/reusable-workflows/.github/workflows/ci-build-maven.yml@main
     with:
-      run-tests: ${{ github.event.inputs.run-tests }}
-      run-sonar-analysis: ${{ github.event.inputs.run-sonar-analysis }}
+      run-tests: ${{ fromJson(github.event.inputs.run-tests) }}
+      run-sonar-analysis: ${{ fromJson(github.event.inputs.run-sonar-analysis) }}
     secrets: inherit
 
   call-deploy:
