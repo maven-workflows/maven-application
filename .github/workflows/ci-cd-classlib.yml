@@ -12,8 +12,8 @@ on:
         default: 'true'
       run-sonar-analysis:
         description: 'Rodar SonarCloud?'
-        type: string
-        default: 'false'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
