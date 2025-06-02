@@ -64,6 +64,6 @@ jobs:
 
   call-publish:
     needs: call-build
-    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'class-lib')
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'class-lib')}}
     uses: maven-workflows/reusable-workflows/.github/workflows/cd-publish-packages.yml@main
     secrets: inherit
