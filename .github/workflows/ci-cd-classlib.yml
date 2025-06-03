@@ -37,7 +37,12 @@ jobs:
       run-tests: ${{ fromJson(github.event.inputs.run-tests || 'true') }}
       run-sonar-analysis: ${{ fromJson(github.event.inputs['run-sonar-analysis'] || 'true') }}
     secrets: inherit
-
+  
+  call-build-and-publish-image:
+    needs: call-build
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
+    uses: maven-workflows/reusable-workflows/.github/workflows/ci-build-push-image.yml@main
+    
   call-deploy:
     needs: call-build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
