@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       application_target:
-        description: 'Qual pipeline executar: da biblioteca (class-lib) ou da aplicação (deploy_app)?'
+        description: 'Qual pipeline executar?'
         type: choice
         options:
           - class-lib
