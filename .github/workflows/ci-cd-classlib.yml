@@ -48,6 +48,9 @@ jobs:
     needs: call-build-and-publish-image
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
     uses: maven-workflows/reusable-workflows/.github/workflows/cd-container-deploy.yml@main
+    with:
+      acr_username: ${{ needs.build.outputs.acr_username }}
+      acr_password: ${{ needs.build.outputs.acr_password }}
     secrets: inherit
 
   call-publish:
