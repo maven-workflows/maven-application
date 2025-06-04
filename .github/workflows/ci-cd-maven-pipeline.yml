@@ -41,13 +41,13 @@ jobs:
   call-docker-build:
     needs: call-build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
-    uses: maven-workflows/reusable-workflows/.github/workflows/ci-build-push-image.yml@main
+    uses: maven-workflows/reusable-workflows/.github/workflows/ci-cd-docker-build.yml@main
     secrets: inherit
     
   call-deploy:
     needs: call-docker-build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
-    uses: maven-workflows/reusable-workflows/.github/workflows/cd-container-deploy.yml@main
+    uses: maven-workflows/reusable-workflows/.github/workflows/cd-container-apps-deploy.yml@main
     with:
       acr_username: ${{ needs.call-docker-build.outputs.acr_username }}
       acr_password: ${{ needs.call-docker-build.outputs.acr_password }}
