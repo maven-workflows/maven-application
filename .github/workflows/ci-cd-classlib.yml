@@ -38,19 +38,19 @@ jobs:
       run-sonar-analysis: ${{ fromJson(github.event.inputs['run-sonar-analysis'] || 'true') }}
     secrets: inherit
   
-  call-build-and-publish-image:
+  call-docker-build:
     needs: call-build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
     uses: maven-workflows/reusable-workflows/.github/workflows/ci-build-push-image.yml@main
     secrets: inherit
     
   call-deploy:
-    needs: call-build-and-publish-image
+    needs: call-docker-build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
     uses: maven-workflows/reusable-workflows/.github/workflows/cd-container-deploy.yml@main
     with:
-      acr_username: ${{ needs.call-build-and-publish-image.outputs.acr_username }}
-      acr_password: ${{ needs.call-build-and-publish-image.outputs.acr_password }}
+      acr_username: ${{ needs.call-docker-build.outputs.acr_username }}
+      acr_password: ${{ needs.call-docker-build.outputs.acr_password }}
     secrets: inherit
 
   call-publish:
