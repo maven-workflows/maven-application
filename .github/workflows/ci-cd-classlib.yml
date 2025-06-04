@@ -42,6 +42,7 @@ jobs:
     needs: call-build
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.application_target == 'deploy_app')
     uses: maven-workflows/reusable-workflows/.github/workflows/ci-build-push-image.yml@main
+    secrets: inherit
     
   call-deploy:
     needs: call-build-and-publish-image
