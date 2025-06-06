@@ -23,4 +23,24 @@ public class HelloController {
     public List<Integer> getNumbers() {
         return Arrays.asList(10, 20, 30, 40, 50);
     }
+
+    @GetMapping("/cities")
+    public List<String> getCities() {
+        return Arrays.asList("São Paulo", "Rio de Janeiro", "Belo Horizonte", "Porto Alegre");
+    }
+
+    @GetMapping("/colors")
+    public List<String> getColors() {
+        return Arrays.asList("Vermelho", "Verde", "Azul", "Amarelo", "Preto");
+    }
+
+    @GetMapping("/status")
+    public Map<String, Object> getStatus() {
+        Map<String, Object> status = new HashMap<>();
+        status.put("application", "sample");
+        status.put("version", "1.0.0");
+        status.put("status", "up");
+        status.put("timestamp", System.currentTimeMillis());
+        return status;
+    }
 }
