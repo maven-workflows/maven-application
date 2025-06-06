@@ -34,13 +34,4 @@ public class HelloController {
         return Arrays.asList("Vermelho", "Verde", "Azul", "Amarelo", "Preto");
     }
 
-    @GetMapping("/status")
-    public Map<String, Object> getStatus() {
-        Map<String, Object> status = new HashMap<>();
-        status.put("application", "sample");
-        status.put("version", "1.0.0");
-        status.put("status", "up");
-        status.put("timestamp", System.currentTimeMillis());
-        return status;
-    }
 }
